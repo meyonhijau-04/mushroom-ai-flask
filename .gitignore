@@ -1,0 +1,24 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment — WAJIB diabaikan, jangan diupload ke GitHub
+venv/
+env/
+.venv/
+
+# File environment variabel
+.env
+
+# Model — akan dibuat ulang otomatis saat deploy di Railway
+model/
+
+# Gambar yang diupload user
+static/uploads/
+
+# VSCode setting
+.vscode/
+
+# MacOS
+.DS_Store

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluasi Model - MushroomAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-main sticky-top">
+    <div class="container">
+        <a class="navbar-brand-main" href="/">
+            <div class="brand-logo">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
+            <span class="brand-name">Mushroom<span>AI</span></span>
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <i class="fa-solid fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+                <li class="nav-item">
+                    <a class="nav-link-main" href="/">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-main active" href="/evaluate">Evaluasi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-main" href="/about">Tentang</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+    <div class="container">
+        <div class="page-header-inner">
+            <div class="section-tag">Performa Model</div>
+            <h1 class="page-header-title">Evaluasi Model Random Forest</h1>
+            <p class="page-header-desc">
+                Hasil evaluasi lengkap model meliputi akurasi, confusion matrix,
+                classification report, dan feature importance
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- EVALUASI CONTENT -->
+<section class="evaluate-section">
+    <div class="container">
+
+        <!-- Stat Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3 col-6">
+                <div class="eval-stat-card">
+                    <div class="eval-stat-val">{{ data.accuracy }}%</div>
+                    <div class="eval-stat-label">Akurasi Model</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="eval-stat-card">
+                    <div class="eval-stat-val">{{ data.total_data }}</div>
+                    <div class="eval-stat-label">Total Dataset</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="eval-stat-card">
+                    <div class="eval-stat-val">{{ data.total_train }}</div>
+                    <div class="eval-stat-label">Data Training</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="eval-stat-card">
+                    <div class="eval-stat-val">{{ data.total_test }}</div>
+                    <div class="eval-stat-label">Data Testing</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Confusion Matrix -->
+            <div class="col-lg-5">
+                <div class="eval-card">
+                    <div class="eval-card-head">
+                        <div>
+                            <h5>Confusion Matrix</h5>
+                            <p>Visualisasi prediksi benar dan salah per kelas</p>
+                        </div>
+                    </div>
+                    <div class="cm-wrap">
+                        <div class="cm-label-top">
+                            <span></span>
+                            <span>Pred Edible</span>
+                            <span>Pred Poisonous</span>
+                        </div>
+                        <div class="cm-row">
+                            <span class="cm-label-side">Actual Edible</span>
+                            <div class="cm-cell cm-tp">
+                                <div class="cm-cell-val">{{ data.cm[0][0] }}</div>
+                                <div class="cm-cell-label">True Positive</div>
+                            </div>
+                            <div class="cm-cell cm-fp">
+                                <div class="cm-cell-val">{{ data.cm[0][1] }}</div>
+                                <div class="cm-cell-label">False Negative</div>
+                            </div>
+                        </div>
+                        <div class="cm-row">
+                            <span class="cm-label-side">Actual Poisonous</span>
+                            <div class="cm-cell cm-fn">
+                                <div class="cm-cell-val">{{ data.cm[1][0] }}</div>
+                                <div class="cm-cell-label">False Positive</div>
+                            </div>
+                            <div class="cm-cell cm-tn">
+                                <div class="cm-cell-val">{{ data.cm[1][1] }}</div>
+                                <div class="cm-cell-label">True Negative</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Classification Report -->
+            <div class="col-lg-7">
+                <div class="eval-card">
+                    <div class="eval-card-head">
+                        <div>
+                            <h5>Classification Report</h5>
+                            <p>Precision, Recall, dan F1-Score per kelas</p>
+                        </div>
+                    </div>
+                    <div class="report-table">
+                        <!-- Header -->
+                        <div class="report-row report-header">
+                            <span>Kelas</span>
+                            <span>Precision</span>
+                            <span>Recall</span>
+                            <span>F1-Score</span>
+                            <span>Support</span>
+                        </div>
+                        <!-- Edible -->
+                        <div class="report-row">
+                            <span class="report-class">Edible</span>
+                            <span>{{ "%.2f"|format(data.report['Edible']['precision']) }}</span>
+                            <span>{{ "%.2f"|format(data.report['Edible']['recall']) }}</span>
+                            <span>{{ "%.2f"|format(data.report['Edible']['f1-score']) }}</span>
+                            <span>{{ data.report['Edible']['support']|int }}</span>
+                        </div>
+                        <!-- Poisonous -->
+                        <div class="report-row">
+                            <span class="report-class">Poisonous</span>
+                            <span>{{ "%.2f"|format(data.report['Poisonous']['precision']) }}</span>
+                            <span>{{ "%.2f"|format(data.report['Poisonous']['recall']) }}</span>
+                            <span>{{ "%.2f"|format(data.report['Poisonous']['f1-score']) }}</span>
+                            <span>{{ data.report['Poisonous']['support']|int }}</span>
+                        </div>
+                        <!-- Macro Avg -->
+                        <div class="report-row report-avg">
+                            <span>Macro Avg</span>
+                            <span>{{ "%.2f"|format(data.report['macro avg']['precision']) }}</span>
+                            <span>{{ "%.2f"|format(data.report['macro avg']['recall']) }}</span>
+                            <span>{{ "%.2f"|format(data.report['macro avg']['f1-score']) }}</span>
+                            <span>{{ data.report['macro avg']['support']|int }}</span>
+                        </div>
+                        <!-- Weighted Avg -->
+                        <div class="report-row report-avg">
+                            <span>Weighted Avg</span>
+                            <span>{{ "%.2f"|format(data.report['weighted avg']['precision']) }}</span>
+                            <span>{{ "%.2f"|format(data.report['weighted avg']['recall']) }}</span>
+                            <span>{{ "%.2f"|format(data.report['weighted avg']['f1-score']) }}</span>
+                            <span>{{ data.report['weighted avg']['support']|int }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Importance -->
+            <div class="col-12">
+                <div class="eval-card">
+                    <div class="eval-card-head">
+                        <div>
+                            <h5>Feature Importance</h5>
+                            <p>10 fitur piksel paling berpengaruh dalam klasifikasi</p>
+                        </div>
+                    </div>
+                    <div class="feature-list">
+                        {% for feat in data.top_features %}
+                        <div class="feature-item">
+                            <div class="feature-rank">{{ loop.index }}</div>
+                            <div class="feature-name">{{ feat.name }}</div>
+                            <div class="feature-bar-wrap">
+                                <div class="feature-bar"
+                                     style="width: 0%"
+                                     data-width="{{ (feat.value / data.top_features[0].value) * 100 }}">
+                                </div>
+                            </div>
+                            <div class="feature-val">{{ feat.value }}%</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-main">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand">MushroomAI</div>
+            <p class="footer-desc">
+                Aplikasi klasifikasi jamur menggunakan algoritma Random Forest.
+                Dibuat untuk keperluan akademik mata kuliah Kecerdasan Buatan.
+            </p>
+            <p class="footer-disclaimer">
+                Hasil prediksi hanya untuk keperluan edukasi.
+                Jangan gunakan sebagai acuan konsumsi jamur liar.
+            </p>
+            <div class="footer-tech">
+                <span>Python</span>
+                <span>Flask</span>
+                <span>Scikit-Learn</span>
+                <span>Bootstrap 5</span>
+                <span>Random Forest</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Animasi feature bar setelah halaman selesai load
+    window.addEventListener("load", () => {
+        document.querySelectorAll(".feature-bar").forEach(bar => {
+            const w = bar.getAttribute("data-width");
+            setTimeout(() => {
+                bar.style.width = parseFloat(w).toFixed(2) + "%";
+            }, 200);
+        });
+    });
+</script>
+
+</body>
+</html>

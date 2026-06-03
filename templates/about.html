@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang - MushroomAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-main sticky-top">
+    <div class="container">
+        <a class="navbar-brand-main" href="/">
+            <div class="brand-logo">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
+            <span class="brand-name">Mushroom<span>AI</span></span>
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <i class="fa-solid fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+                <li class="nav-item">
+                    <a class="nav-link-main" href="/">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-main" href="/evaluate">Evaluasi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-main active" href="/about">Tentang</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+    <div class="container">
+        <div class="page-header-inner">
+            <div class="section-tag">Informasi Proyek</div>
+            <h1 class="page-header-title">Tentang MushroomAI</h1>
+            <p class="page-header-desc">
+                Informasi lengkap mengenai aplikasi, dataset, model,
+                dan teknologi yang digunakan
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT CONTENT -->
+<section class="about-section">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Tentang Aplikasi -->
+            <div class="col-lg-6">
+                <div class="about-card">
+                    <div class="about-card-header">
+                        <h4>Tentang Aplikasi</h4>
+                    </div>
+                    <p>
+                        <strong>MushroomAI</strong> adalah aplikasi web berbasis kecerdasan buatan
+                        yang menggunakan algoritma <strong>Random Forest</strong> untuk
+                        mengklasifikasikan jamur sebagai dapat dimakan (Edible) atau
+                        beracun (Poisonous) berdasarkan gambar yang diunggah.
+                    </p>
+                    <p class="mb-0">
+                        Aplikasi ini dikembangkan sebagai tugas praktikum mata kuliah
+                        <strong>Kecerdasan Buatan</strong> menggunakan Python dan Flask
+                        sebagai backend, serta Bootstrap 5 untuk antarmuka pengguna.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dataset -->
+            <div class="col-lg-6">
+                <div class="about-card">
+                    <div class="about-card-header">
+                        <h4>Dataset</h4>
+                    </div>
+                    <div class="info-table">
+                        <div class="info-row">
+                            <span class="info-key">Sumber</span>
+                            <span class="info-val">Kaggle</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Nama Dataset</span>
+                            <span class="info-val">Edible and Poisonous Mushroom Images</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Total Gambar</span>
+                            <span class="info-val">83 gambar</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Edible</span>
+                            <span class="info-val">38 gambar</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Poisonous</span>
+                            <span class="info-val">45 gambar</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Format</span>
+                            <span class="info-val">JPG / JPEG</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail Model -->
+            <div class="col-lg-6">
+                <div class="about-card">
+                    <div class="about-card-header">
+                        <h4>Detail Model</h4>
+                    </div>
+                    <div class="info-table">
+                        <div class="info-row">
+                            <span class="info-key">Algoritma</span>
+                            <span class="info-val">Random Forest Classifier</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Jumlah Pohon</span>
+                            <span class="info-val">100 estimators</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Max Depth</span>
+                            <span class="info-val">10</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Ukuran Input</span>
+                            <span class="info-val">64 x 64 piksel</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Total Fitur</span>
+                            <span class="info-val">12.288 fitur piksel RGB</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Akurasi</span>
+                            <span class="info-val">76.47%</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Split Data</span>
+                            <span class="info-val">80% training / 20% testing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teknologi -->
+            <div class="col-lg-6">
+                <div class="about-card">
+                    <div class="about-card-header">
+                        <h4>Teknologi yang Digunakan</h4>
+                    </div>
+                    <div class="tech-grid">
+                        <div class="tech-item">Python 3</div>
+                        <div class="tech-item">Flask</div>
+                        <div class="tech-item">Scikit-Learn</div>
+                        <div class="tech-item">NumPy</div>
+                        <div class="tech-item">Pillow</div>
+                        <div class="tech-item">Bootstrap 5</div>
+                        <div class="tech-item">JavaScript</div>
+                        <div class="tech-item">Gunicorn</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="col-12">
+                <div class="disclaimer-card">
+                    <div class="disclaimer-content">
+                        <h5>Peringatan Penting</h5>
+                        <p class="mb-0">
+                            Aplikasi ini dikembangkan semata-mata untuk keperluan
+                            <strong>akademik dan edukasi</strong>. Hasil prediksi yang dihasilkan
+                            tidak boleh dijadikan satu-satunya acuan dalam menentukan
+                            keamanan jamur untuk dikonsumsi. Selalu konsultasikan dengan
+                            ahli mikologi sebelum mengonsumsi jamur liar.
+                            <strong>Keselamatan Anda adalah prioritas utama.</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-main">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand">MushroomAI</div>
+            <p class="footer-desc">
+                Aplikasi klasifikasi jamur menggunakan algoritma Random Forest.
+                Dibuat untuk keperluan akademik mata kuliah Kecerdasan Buatan.
+            </p>
+            <p class="footer-disclaimer">
+                Hasil prediksi hanya untuk keperluan edukasi.
+                Jangan gunakan sebagai acuan konsumsi jamur liar.
+            </p>
+            <div class="footer-tech">
+                <span>Python</span>
+                <span>Flask</span>
+                <span>Scikit-Learn</span>
+                <span>Bootstrap 5</span>
+                <span>Random Forest</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

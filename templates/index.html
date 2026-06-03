@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MushroomAI - Klasifikasi Jamur</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-main sticky-top">
+    <div class="container">
+        <a class="navbar-brand-main" href="/">
+            <div class="brand-logo">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
+            <span class="brand-name">Mushroom<span>AI</span></span>
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <i class="fa-solid fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+                <li class="nav-item">
+                    <a class="nav-link-main active" href="/">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-main" href="/evaluate">Evaluasi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link-main" href="/about">Tentang</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container position-relative">
+        <div class="row align-items-center" style="min-height: 88vh;">
+            <div class="col-lg-6">
+                <div class="hero-tag">Random Forest Algorithm</div>
+                <h1 class="hero-title">
+                    Identifikasi Jamur<br>
+                    <span class="hero-title-accent">Aman atau Beracun</span>
+                </h1>
+                <p class="hero-desc">
+                    Teknologi kecerdasan buatan berbasis algoritma Random Forest
+                    untuk mengklasifikasikan jamur sebagai dapat dimakan atau beracun
+                    hanya dari foto dalam hitungan detik.
+                </p>
+                <div class="hero-actions">
+                    <a href="#upload-section" class="btn-primary-main">
+                        
+                        Mulai Analisis
+                    </a>
+                    <a href="/evaluate" class="btn-outline-main">
+                       
+                        Lihat Performa Model
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-flex justify-content-center">
+                <div class="hero-card-float">
+                    <div class="hero-card-inner">
+                        <div class="hero-card-icon">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <div class="hero-card-info">
+                            <div class="hero-card-label">Model Accuracy</div>
+                            <div class="hero-card-value">76.47%</div>
+                        </div>
+                    </div>
+                    <div class="hero-card-inner">
+                        <div class="hero-card-icon">
+                            <i class="fa-solid fa-tree"></i>
+                        </div>
+                        <div class="hero-card-info">
+                            <div class="hero-card-label">Decision Trees</div>
+                            <div class="hero-card-value">100 Trees</div>
+                        </div>
+                    </div>
+                    <div class="hero-card-inner">
+                        <div class="hero-card-icon">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <div class="hero-card-info">
+                            <div class="hero-card-label">Dataset</div>
+                            <div class="hero-card-value">83 Gambar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number">83</div>
+                <div class="stat-label">Total Dataset</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">38</div>
+                <div class="stat-label">Gambar Edible</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">45</div>
+                <div class="stat-label">Gambar Poisonous</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">76%</div>
+                <div class="stat-label">Akurasi Model</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- UPLOAD SECTION -->
+<section class="upload-section" id="upload-section">
+    <div class="container">
+        <div class="section-head text-center">
+            <div class="section-tag">Klasifikasi Gambar</div>
+            <h2 class="section-title">Upload Gambar Jamur</h2>
+            <p class="section-desc">
+                Upload foto jamur yang ingin diidentifikasi,
+                sistem akan menganalisis dan memberikan hasil klasifikasi secara otomatis
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-8">
+
+                <!-- Upload Card -->
+                <div class="upload-card">
+                    <div class="drop-zone" id="dropZone">
+                        <!-- Default State -->
+                        <div id="dropDefault">
+                            <div class="drop-icon-wrap">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                            <h5 class="drop-title">Drag & Drop Gambar</h5>
+                            <p class="drop-desc">atau klik untuk memilih file dari perangkat</p>
+                            <label for="fileInput" class="btn-upload-choose">
+                                Pilih Gambar
+                            </label>
+                            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" hidden>
+                            <p class="drop-hint">Format: JPG, JPEG, PNG — Maksimal 16MB</p>
+                        </div>
+
+                        <!-- Preview State -->
+                        <div id="dropPreview" style="display:none;">
+                            <img id="previewImg" src="" alt="Preview" class="preview-image">
+                            <div class="preview-meta">
+                                <span id="previewName"></span>
+                            </div>
+                            <button class="btn-change-img" id="changeBtn">
+                                Ganti Gambar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Analisis -->
+                    <div class="upload-action">
+                        <button class="btn-analyze" id="analyzeBtn" disabled>
+                            Analisis Gambar
+                        </button>
+                    </div>
+
+                    <!-- Loading -->
+                    <div class="loading-state" id="loadingState" style="display:none;">
+                        <div class="loading-ring"></div>
+                        <p class="loading-text">Sedang menganalisis gambar...</p>
+                        <p class="loading-sub">Model Random Forest sedang memproses</p>
+                    </div>
+                </div>
+
+                <!-- Result Card -->
+                <div class="result-card" id="resultCard" style="display:none;">
+                    <div class="result-header" id="resultHeader">
+                        <div class="result-header-icon">
+                            <i id="resultIcon"></i>
+                        </div>
+                        <div class="result-header-info">
+                            <div class="result-header-tag" id="resultTag"></div>
+                            <h3 class="result-header-title" id="resultTitle"></h3>
+                            <p class="result-header-sub" id="resultSub"></p>
+                        </div>
+                    </div>
+
+                    <div class="result-body">
+                        <div class="result-image-wrap">
+                            <img id="resultImage" src="" alt="Hasil" class="result-image">
+                        </div>
+
+                        <div class="result-metric">
+                            <div class="metric-label">
+                                <span>Tingkat Kepercayaan</span>
+                                <span class="metric-value" id="confidenceVal"></span>
+                            </div>
+                            <div class="metric-bar-track">
+                                <div class="metric-bar" id="confidenceBar"></div>
+                            </div>
+                        </div>
+
+                        <div class="result-prob-grid">
+                            <div class="prob-item prob-edible">
+                                <div class="prob-item-label">Edible</div>
+                                <div class="prob-item-val" id="probEdible"></div>
+                            </div>
+                            <div class="prob-item prob-poisonous">
+                                <div class="prob-item-label">Poisonous</div>
+                                <div class="prob-item-val" id="probPoisonous"></div>
+                            </div>
+                        </div>
+
+                        <div class="result-alert" id="resultAlert"></div>
+
+                        <div class="result-reset">
+                            <button class="btn-reset" id="resetBtn">
+                                Analisis Gambar Lain
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4 d-none d-lg-block">
+                <div class="sidebar-card">
+                    <h5 class="sidebar-title">Cara Kerja Sistem</h5>
+                    <div class="sidebar-steps">
+                        <div class="step-item">
+                            <div class="step-num">01</div>
+                            <div class="step-info">
+                                <div class="step-title">Upload Gambar</div>
+                                <div class="step-desc">Pilih atau drag foto jamur dalam format JPG atau PNG</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">02</div>
+                            <div class="step-info">
+                                <div class="step-title">Ekstraksi Fitur</div>
+                                <div class="step-desc">Gambar diresize ke 64x64 piksel dan diekstrak menjadi 12.288 fitur</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">03</div>
+                            <div class="step-info">
+                                <div class="step-title">Prediksi Model</div>
+                                <div class="step-desc">100 pohon keputusan melakukan voting untuk menentukan hasil</div>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">04</div>
+                            <div class="step-info">
+                                <div class="step-title">Tampilkan Hasil</div>
+                                <div class="step-desc">Hasil klasifikasi ditampilkan beserta tingkat kepercayaan model</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card mt-3">
+                    <h5 class="sidebar-title">Informasi Dataset</h5>
+                    <div class="dataset-info">
+                        <div class="dataset-row">
+                            <span>Sumber</span>
+                            <span>Kaggle</span>
+                        </div>
+                        <div class="dataset-row">
+                            <span>Total Gambar</span>
+                            <span>83</span>
+                        </div>
+                        <div class="dataset-row">
+                            <span>Edible</span>
+                            <span>38 gambar</span>
+                        </div>
+                        <div class="dataset-row">
+                            <span>Poisonous</span>
+                            <span>45 gambar</span>
+                        </div>
+                        <div class="dataset-row">
+                            <span>Ukuran Input</span>
+                            <span>64 x 64 px</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-main">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand">MushroomAI</div>
+            <p class="footer-desc">
+                Aplikasi klasifikasi jamur menggunakan algoritma Random Forest.
+                Dibuat untuk keperluan akademik mata kuliah Kecerdasan Buatan.
+            </p>
+                Hasil prediksi hanya untuk keperluan edukasi.
+                Jangan gunakan sebagai acuan konsumsi jamur liar.
+            </p>
+            <div class="footer-tech">
+                <span>Python</span>
+                <span>Flask</span>
+                <span>Scikit-Learn</span>
+                <span>Bootstrap 5</span>
+                <span>Random Forest</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
