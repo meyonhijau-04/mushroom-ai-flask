@@ -107,7 +107,7 @@ mushroom-app/
 ### 1. Clone repository
 
 ```bash
-git clone https://github.com/meyonhijau-04/mushroom-ai-flask.git
+git clone https://github.com/SelsaShaf/mushroom-ai-flask.git
 cd mushroom-ai-flask
 ```
 
