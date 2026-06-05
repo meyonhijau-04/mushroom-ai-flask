@@ -107,7 +107,7 @@ mushroom-app/
 ### 1. Clone repository
 
 ```bash
-git clone https://github.com/USERNAME/mushroom-ai-flask.git
+git clone https://github.com/meyonhijau-04/mushroom-ai-flask.git
 cd mushroom-ai-flask
 ```
 
@@ -176,8 +176,8 @@ http://localhost:5000
 ## Deployment
 
 Link aplikasi: 
-(mushroom-ai-flask-production.up.railway.app)
-(mushroom.mushroom-ai.my.id)
+https://mushroom-ai-flask-production.up.railway.app/
+https://mushroom.mushroom-ai.my.id/
 
 ---
 
